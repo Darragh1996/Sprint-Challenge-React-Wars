@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./App.css";
 import axios from "axios";
 import Card from "./components/Card";
+import StyledButton from './components/Button'
 
 const App = () => {
   // Try to think through what state you'll need for this app before starting. Then build out
@@ -52,7 +53,7 @@ const App = () => {
           />
         );
       })}
-      <button onClick={() => handleClick()}>Next Page</button>
+      <StyledButton handleClick={handleClick} />
     </div>
   );
 };
