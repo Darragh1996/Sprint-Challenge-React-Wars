@@ -11,12 +11,21 @@ const App = () => {
   // side effect in a component, you want to think about which state and/or props it should
   // sync up with, if any.
   const [characters, setCharacters] = useState([]);
+  const [page, setPage] = useState("https://cors-anywhere.herokuapp.com/https://swapi.co/api/people");
+  const [nextPage, setNextPage] = useState('');
+
+  function handleClick(){
+    setPage(nextPage);
+    setCharacters([]);
+  }
 
   useEffect(() => {
     axios
-      .get("https://cors-anywhere.herokuapp.com/https://swapi.co/api/people")
+      .get(page)
       .then(res => {
         console.log(res);
+        setNextPage(res.data.next);
+        console.log(nextPage);
         return res.data;
       })
       .then(chars => {
@@ -27,7 +36,7 @@ const App = () => {
         }
       })
       .catch(err => console.log(err));
-  }, []);
+  }, [page]);
 
   return (
     <div className="App">
@@ -43,6 +52,7 @@ const App = () => {
           />
         );
       })}
+      <button onClick={() => handleClick()}>Next Page</button>
     </div>
   );
 };
